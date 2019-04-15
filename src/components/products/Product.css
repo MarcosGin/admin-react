@@ -1,0 +1,5 @@
+.table-header {
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: flex-end;
+}

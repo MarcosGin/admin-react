@@ -1,11 +1,26 @@
 {
   "name": "admin",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "antd": "^3.15.1",
+    "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "connected-react-router": "^6.3.2",
+    "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "react": "^16.8.4",
+    "react-currency-formatter": "^1.1.0",
     "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8"
+    "react-moment": "^0.9.1",
+    "react-redux": "^6.0.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.8",
+    "react-toastify": "^5.0.0-rc.3",
+    "react-toastify-redux": "^1.0.0-rc.2",
+    "redux": "^4.0.1",
+    "redux-form": "^8.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

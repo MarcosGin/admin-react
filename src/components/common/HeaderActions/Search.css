@@ -1,0 +1,28 @@
+.search-input.show {
+  background: transparent;
+}
+
+.search-input .anticon-search {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-input .input-container {
+  border-bottom: 1px solid #d9d9d9;
+  width: 0;
+  background: transparent;
+  border-radius: 0;
+  transition: width 0.3s, margin-left 0.3s;
+}
+
+.search-input.show .input-container {
+  width: 210px;
+  margin-left: 8px;
+}
+
+.search-input .input-container input {
+  border: 0;
+  padding-left: 0;
+  padding-right: 0;
+  box-shadow: none !important;
+}
