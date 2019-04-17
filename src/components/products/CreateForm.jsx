@@ -24,7 +24,7 @@ class CreateForm extends Component {
     return (
       <Modal
         destroyOnClose
-        title="Adding a new product"
+        title="Creating a new product"
         visible={modalVisible}
         width={620}
         onOk={this.onOk}

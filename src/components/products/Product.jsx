@@ -167,7 +167,7 @@ class Product extends Component {
         sorter: true
       },
       {
-        title: "Mark",
+        title: "Brand",
         width: "12%",
         dataIndex: "mark.name",
         filtered: true,
