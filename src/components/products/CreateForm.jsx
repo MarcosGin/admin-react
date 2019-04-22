@@ -31,7 +31,11 @@ class CreateForm extends Component {
         onCancel={() => handleModalVisible()}
         okText="Create"
       >
-        <AddProductForm onSubmit={this.onCreate} />
+        <AddProductForm
+          onSubmit={this.onCreate}
+          marks={this.props.marks}
+          categories={this.props.categories}
+        />
       </Modal>
     );
   }

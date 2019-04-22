@@ -262,6 +262,8 @@ class Product extends Component {
         <CreateForm
           modalVisible={modalVisible}
           handleModalVisible={this.handleModalVisible}
+          marks={marks}
+          categories={categories}
           handleAdd={this.handleAdd}
         />
       </div>
