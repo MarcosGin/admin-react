@@ -144,6 +144,7 @@ class AddProductForm extends Component {
           placeholder="Stock"
           component={this.renderInputNumber}
         />
+        <button type="submit" style={{ display: "none" }} />
       </form>
     );
   }

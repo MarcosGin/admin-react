@@ -13,8 +13,6 @@ class CreateForm extends Component {
 
   onOk = () => {
     const { dispatch } = this.props;
-
-    // For dispatch submit form from other component
     dispatch(submit("productAdd"));
   };
 
