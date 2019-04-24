@@ -6,7 +6,7 @@ import Currency from "react-currency-formatter";
 import moment from "moment";
 import { Card, Table, Input, Button, Icon, Badge, Divider } from "antd";
 
-import { getProducts, getMarks, getCategories } from "../../actions";
+import { getProducts, getBrands, getCategories } from "../../actions";
 import CreateForm from "./CreateForm";
 
 const getValue = obj =>
@@ -82,13 +82,13 @@ class Product extends Component {
 
   componentDidMount() {
     this.props.getProducts({ pagination: { current: 1, pageSize: 10 } });
-    this.props.getMarks();
+    this.props.getBrands();
     this.props.getCategories();
   }
 
   render() {
     const { data: products, isLoading: isLoadingProduct } = this.props.products;
-    const { data: marks, isLoading: isLoadingMark } = this.props.marks;
+    const { data: brands, isLoading: isLoadingBrand } = this.props.brands;
     const {
       data: categories,
       isLoading: isLoadingCategory
@@ -100,11 +100,11 @@ class Product extends Component {
       ? { showSizeChanger: true, ...products.pagination }
       : false;
 
-    const filtersMark = this.parseToFilters(marks);
+    const filtersBrand = this.parseToFilters(brands);
     const filtersCategories = this.parseToFilters(categories);
 
     const loading =
-      isLoadingProduct || isLoadingMark || isLoadingCategory ? true : false;
+      isLoadingProduct || isLoadingBrand || isLoadingCategory ? true : false;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -167,11 +167,11 @@ class Product extends Component {
         sorter: true
       },
       {
-        title: "Mark",
+        title: "Brand",
         width: "12%",
         dataIndex: "mark.name",
         filtered: true,
-        filters: filtersMark
+        filters: filtersBrand
       },
       {
         title: "Category",
@@ -262,6 +262,8 @@ class Product extends Component {
         <CreateForm
           modalVisible={modalVisible}
           handleModalVisible={this.handleModalVisible}
+          brands={brands}
+          categories={categories}
           handleAdd={this.handleAdd}
         />
       </div>
@@ -269,16 +271,16 @@ class Product extends Component {
   }
 }
 
-const mapStateToProps = ({ auth, products, marks, categories }) => {
+const mapStateToProps = ({ auth, products, brands, categories }) => {
   return {
     auth,
     products,
-    marks,
+    brands,
     categories
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getProducts, getMarks, getCategories }
+  { getProducts, getBrands, getCategories }
 )(Product);

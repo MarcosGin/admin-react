@@ -13,8 +13,6 @@ class CreateForm extends Component {
 
   onOk = () => {
     const { dispatch } = this.props;
-
-    // For dispatch submit form from other component
     dispatch(submit("productAdd"));
   };
 
@@ -24,14 +22,18 @@ class CreateForm extends Component {
     return (
       <Modal
         destroyOnClose
-        title="Adding a new product"
+        title="Creating a new product"
         visible={modalVisible}
         width={620}
         onOk={this.onOk}
         onCancel={() => handleModalVisible()}
         okText="Create"
       >
-        <AddProductForm onSubmit={this.onCreate} />
+        <AddProductForm
+          onSubmit={this.onCreate}
+          brands={this.props.brands}
+          categories={this.props.categories}
+        />
       </Modal>
     );
   }

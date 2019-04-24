@@ -10,9 +10,9 @@ export const GET_PRODUCTS = "GET_PRODUCTS";
 export const ALL_PRODUCTS = "ALL_PRODUCTS";
 export const ERROR_ALL_PRODUCTS = "ERROR_ALL_PRODUCTS";
 
-export const GET_MARKS = "GET_MARKS";
-export const ALL_MARKS = "ALL_MARKS";
-export const ERROR_ALL_MARKS = "ERROR_ALL_MARKS";
+export const GET_BRANDS = "GET_BRANDS";
+export const ALL_BRANDS = "ALL_BRANDS";
+export const ERROR_ALL_BRANDS = "ERROR_ALL_BRANDS";
 
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const ALL_CATEGORIES = "ALL_CATEGORIES";

@@ -6,7 +6,7 @@ import { toastsReducer as toasts } from "react-toastify-redux";
 
 import authReducer from "./auth";
 import productReducer from "./product";
-import marksReducer from "./mark";
+import brandsReducer from "./brand";
 import categoriesReducer from "./category";
 
 export default history =>
@@ -14,7 +14,7 @@ export default history =>
     router: connectRouter(history),
     auth: authReducer,
     products: productReducer,
-    marks: marksReducer,
+    brands: brandsReducer,
     categories: categoriesReducer,
     toasts,
     form: formReducer
