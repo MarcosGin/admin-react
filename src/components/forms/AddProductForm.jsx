@@ -1,10 +1,11 @@
+import "react-quill/dist/quill.snow.css";
 import "./AddProductForm.css";
 
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import _ from "lodash";
 import { Input, Select, Icon, Form, InputNumber } from "antd";
-import TextArea from "antd/lib/input/TextArea";
+import TextArea from "../common/TextArea/TextArea";
 
 const { Option } = Select;
 
@@ -38,7 +39,9 @@ class AddProductForm extends Component {
     }
 
     return values.map(option => (
-      <Option value={option.id}>{option.name}</Option>
+      <Option value={option.id} key={option.id}>
+        {option.name}
+      </Option>
     ));
   };
 
@@ -91,7 +94,16 @@ class AddProductForm extends Component {
   };
 
   renderEditorArea = ({ input, meta, placeholder }) => {
-    return <TextArea />;
+    const errorMessage = this.getErrorMessage(meta);
+
+    return (
+      <Form.Item
+        validateStatus={errorMessage ? "error" : "validating"}
+        help={errorMessage}
+      >
+        <TextArea {...input} hasError={errorMessage} />
+      </Form.Item>
+    );
   };
 
   render() {
@@ -109,7 +121,7 @@ class AddProductForm extends Component {
         <Field
           name="mark"
           placeholder="Brand"
-          options={this.props.marks}
+          options={this.props.brands}
           component={this.renderSelect}
         />
         <Field
@@ -136,10 +148,13 @@ class AddProductForm extends Component {
     );
   }
 }
-const validate = ({ title, mark, category, price }) => {
+const validate = ({ title, description, mark, category, price }) => {
   const errors = {};
   if (!title) {
     errors.title = "Please enter a title";
+  }
+  if (!description) {
+    errors.description = "Please enter a description";
   }
   if (!mark) {
     errors.mark = "Please select a brand";

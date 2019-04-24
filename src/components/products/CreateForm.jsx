@@ -33,7 +33,7 @@ class CreateForm extends Component {
       >
         <AddProductForm
           onSubmit={this.onCreate}
-          marks={this.props.marks}
+          brands={this.props.brands}
           categories={this.props.categories}
         />
       </Modal>

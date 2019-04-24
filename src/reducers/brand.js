@@ -1,4 +1,4 @@
-import { GET_MARKS, ALL_MARKS, API_START, API_END } from "../actions/types";
+import { GET_BRANDS, ALL_BRANDS, API_START, API_END } from "../actions/types";
 
 const INITIAL_STATE = {
   isLoading: false,
@@ -8,14 +8,14 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case ALL_MARKS:
+    case ALL_BRANDS:
       return {
         ...state,
         data: action.payload.response
       };
 
     case API_START:
-      if (action.payload === GET_MARKS) {
+      if (action.payload === GET_BRANDS) {
         return {
           ...state,
           isLoading: true
@@ -24,7 +24,7 @@ export default (state = INITIAL_STATE, action) => {
         return state;
       }
     case API_END:
-      if (action.payload === GET_MARKS) {
+      if (action.payload === GET_BRANDS) {
         return {
           ...state,
           isLoading: false
