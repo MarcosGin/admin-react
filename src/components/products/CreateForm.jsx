@@ -5,14 +5,15 @@ import { submit } from "redux-form";
 import { Modal } from "antd";
 import AddProductForm from "../forms/AddProductForm";
 
+import { getProducts } from "../../actions";
+
 class CreateForm extends Component {
   onCreate = formValues => {
     this.props.handleAdd(formValues);
   };
 
   onOk = () => {
-    const { dispatch } = this.props;
-    dispatch(submit("productAdd"));
+    this.props.created();
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -25,7 +26,7 @@ class CreateForm extends Component {
     ) {
       if (currentProducts.created === true && !currentProducts.isCreating) {
         handleModalVisible();
-        //Maybe update here the getproducts
+        this.props.getProducts(this.props.products.filters);
       }
     }
   }
@@ -70,4 +71,14 @@ const mapStateToProps = ({ products }) => {
   };
 };
 
-export default connect(mapStateToProps)(CreateForm);
+const mapDispatchToProps = dispatch => {
+  return {
+    getProducts: filters => dispatch(getProducts(filters)),
+    created: () => dispatch(submit("productAdd"))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateForm);

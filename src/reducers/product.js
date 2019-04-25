@@ -6,7 +6,8 @@ import {
   ADD_PRODUCT,
   CREATE_PRODUCT,
   ERROR_CREATE_PRODUCT,
-  CLEAR_MODAL
+  CLEAR_MODAL,
+  UPDATE_FILTERS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -15,7 +16,8 @@ const INITIAL_STATE = {
   data: [],
   error: null,
   created: null,
-  createErrors: []
+  createErrors: [],
+  filters: {}
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -46,6 +48,12 @@ export default (state = INITIAL_STATE, action) => {
         created: null,
         isCreating: false,
         createErrors: []
+      };
+
+    case UPDATE_FILTERS:
+      return {
+        ...state,
+        filters: action.payload
       };
 
     case API_START:
