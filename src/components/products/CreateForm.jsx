@@ -7,7 +7,6 @@ import AddProductForm from "../forms/AddProductForm";
 
 class CreateForm extends Component {
   onCreate = formValues => {
-    this.props.handleModalVisible();
     this.props.handleAdd(formValues);
   };
 
@@ -16,8 +15,31 @@ class CreateForm extends Component {
     dispatch(submit("productAdd"));
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    const { products: prevProducts } = prevProps;
+    const { products: currentProducts, handleModalVisible } = this.props;
+
+    if (
+      prevProducts.created !== currentProducts.created ||
+      prevProducts.isCreating !== currentProducts.isCreating
+    ) {
+      if (currentProducts.created === true && !currentProducts.isCreating) {
+        handleModalVisible();
+        //Maybe update here the getproducts
+      }
+    }
+  }
+
   render() {
-    const { handleModalVisible, modalVisible } = this.props;
+    const {
+      handleModalVisible,
+      modalVisible,
+      brands,
+      categories,
+      products
+    } = this.props;
+
+    const { isCreating } = products;
 
     return (
       <Modal
@@ -28,15 +50,24 @@ class CreateForm extends Component {
         onOk={this.onOk}
         onCancel={() => handleModalVisible()}
         okText="Create"
+        okButtonProps={{ loading: isCreating }}
+        cancelButtonProps={{ disabled: isCreating }}
       >
         <AddProductForm
           onSubmit={this.onCreate}
-          brands={this.props.brands}
-          categories={this.props.categories}
+          brands={brands}
+          categories={categories}
+          isCreating={isCreating}
         />
       </Modal>
     );
   }
 }
 
-export default connect()(CreateForm);
+const mapStateToProps = ({ products }) => {
+  return {
+    products
+  };
+};
+
+export default connect(mapStateToProps)(CreateForm);
