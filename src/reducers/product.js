@@ -2,13 +2,22 @@ import {
   GET_PRODUCTS,
   API_START,
   API_END,
-  ALL_PRODUCTS
+  ALL_PRODUCTS,
+  ADD_PRODUCT,
+  CREATE_PRODUCT,
+  ERROR_CREATE_PRODUCT,
+  CLEAR_MODAL,
+  UPDATE_FILTERS
 } from "../actions/types";
 
 const INITIAL_STATE = {
   isLoading: false,
+  isCreating: false,
   data: [],
-  error: null
+  error: null,
+  created: null,
+  createErrors: [],
+  filters: {}
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -19,23 +28,63 @@ export default (state = INITIAL_STATE, action) => {
         data: action.payload.response
       };
 
+    case CREATE_PRODUCT:
+      return {
+        ...state,
+        created: true,
+        createErrors: []
+      };
+
+    case ERROR_CREATE_PRODUCT:
+      return {
+        ...state,
+        created: false,
+        createErrors: action.payload.response
+      };
+
+    case CLEAR_MODAL:
+      return {
+        ...state,
+        created: null,
+        isCreating: false,
+        createErrors: []
+      };
+
+    case UPDATE_FILTERS:
+      return {
+        ...state,
+        filters: action.payload
+      };
+
     case API_START:
-      if (action.payload === GET_PRODUCTS) {
-        return {
-          ...state,
-          isLoading: true
-        };
-      } else {
-        return state;
+      switch (action.payload) {
+        case GET_PRODUCTS:
+          return {
+            ...state,
+            isLoading: true
+          };
+        case ADD_PRODUCT:
+          return {
+            ...state,
+            isCreating: true
+          };
+        default:
+          return state;
       }
     case API_END:
-      if (action.payload === GET_PRODUCTS) {
-        return {
-          ...state,
-          isLoading: false
-        };
-      } else {
-        return state;
+      switch (action.payload) {
+        case GET_PRODUCTS:
+          return {
+            ...state,
+            isLoading: false
+          };
+        case ADD_PRODUCT:
+          return {
+            ...state,
+            isCreating: false
+          };
+        default:
+          return state;
       }
     default:
       return state;

@@ -5,19 +5,42 @@ import { submit } from "redux-form";
 import { Modal } from "antd";
 import AddProductForm from "../forms/AddProductForm";
 
+import { getProducts } from "../../actions";
+
 class CreateForm extends Component {
   onCreate = formValues => {
-    this.props.handleModalVisible();
     this.props.handleAdd(formValues);
   };
 
   onOk = () => {
-    const { dispatch } = this.props;
-    dispatch(submit("productAdd"));
+    this.props.created();
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    const { products: prevProducts } = prevProps;
+    const { products: currentProducts, handleModalVisible } = this.props;
+
+    if (
+      prevProducts.created !== currentProducts.created ||
+      prevProducts.isCreating !== currentProducts.isCreating
+    ) {
+      if (currentProducts.created === true && !currentProducts.isCreating) {
+        handleModalVisible();
+        this.props.getProducts(this.props.products.filters);
+      }
+    }
+  }
+
   render() {
-    const { handleModalVisible, modalVisible } = this.props;
+    const {
+      handleModalVisible,
+      modalVisible,
+      brands,
+      categories,
+      products
+    } = this.props;
+
+    const { isCreating } = products;
 
     return (
       <Modal
@@ -28,15 +51,34 @@ class CreateForm extends Component {
         onOk={this.onOk}
         onCancel={() => handleModalVisible()}
         okText="Create"
+        okButtonProps={{ loading: isCreating }}
+        cancelButtonProps={{ disabled: isCreating }}
       >
         <AddProductForm
           onSubmit={this.onCreate}
-          brands={this.props.brands}
-          categories={this.props.categories}
+          brands={brands}
+          categories={categories}
+          isCreating={isCreating}
         />
       </Modal>
     );
   }
 }
 
-export default connect()(CreateForm);
+const mapStateToProps = ({ products }) => {
+  return {
+    products
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getProducts: filters => dispatch(getProducts(filters)),
+    created: () => dispatch(submit("productAdd"))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateForm);

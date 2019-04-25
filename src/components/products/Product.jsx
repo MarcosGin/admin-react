@@ -6,7 +6,13 @@ import Currency from "react-currency-formatter";
 import moment from "moment";
 import { Card, Table, Input, Button, Icon, Badge, Divider } from "antd";
 
-import { getProducts, getBrands, getCategories } from "../../actions";
+import {
+  getProducts,
+  getBrands,
+  getCategories,
+  addProduct,
+  clearModal
+} from "../../actions";
 import CreateForm from "./CreateForm";
 
 const getValue = obj =>
@@ -25,6 +31,7 @@ class Product extends Component {
   };
 
   handleModalVisible = flag => {
+    this.props.clearModal();
     this.setState({
       modalVisible: !!flag
     });
@@ -68,7 +75,7 @@ class Product extends Component {
   };
 
   handleAdd = data => {
-    console.log(data);
+    this.props.addProduct(data);
   };
 
   parseToFilters = items => {
@@ -282,5 +289,5 @@ const mapStateToProps = ({ auth, products, brands, categories }) => {
 
 export default connect(
   mapStateToProps,
-  { getProducts, getBrands, getCategories }
+  { getProducts, getBrands, getCategories, addProduct, clearModal }
 )(Product);
