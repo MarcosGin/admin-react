@@ -3,3 +3,7 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.filtered {
+  color: #1890ff;
+}
