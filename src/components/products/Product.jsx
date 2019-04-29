@@ -1,7 +1,6 @@
 import "./Product.css";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import _ from "lodash";
 import { Card, Button } from "antd";
 
 import {
@@ -9,25 +8,45 @@ import {
   getBrands,
   getCategories,
   addProduct,
+  updateProduct,
+  initUpdateForm,
   clearModal
 } from "../../actions";
 import CreateForm from "./CreateForm";
 import TableProduct from "./table";
+import UpdateForm from "./UpdateForm";
 
 class Product extends Component {
   state = {
-    modalVisible: false
+    modalCreateVisible: false,
+    modalUpdateVisible: false
   };
 
-  handleModalVisible = flag => {
+  handleModalCreate = flag => {
     this.props.clearModal();
     this.setState({
-      modalVisible: !!flag
+      modalCreateVisible: !!flag
     });
   };
 
   handleAdd = data => {
     this.props.addProduct(data);
+  };
+
+  handleUpdate = data => {
+    this.props.updateProduct(data);
+  };
+
+  onUpdate = item => {
+    this.handleModalUpdate(true);
+    this.props.initUpdateForm(item);
+  };
+
+  handleModalUpdate = flag => {
+    this.props.clearModal();
+    this.setState({
+      modalUpdateVisible: !!flag
+    });
   };
 
   componentDidMount() {
@@ -44,7 +63,7 @@ class Product extends Component {
       isLoading: isLoadingCategory
     } = this.props.categories;
 
-    const { modalVisible } = this.state;
+    const { modalCreateVisible, modalUpdateVisible } = this.state;
 
     const paginationProps = products.pagination
       ? { showSizeChanger: true, ...products.pagination }
@@ -60,7 +79,7 @@ class Product extends Component {
             <Button
               icon="plus"
               type="primary"
-              onClick={() => this.handleModalVisible(true)}
+              onClick={() => this.handleModalCreate(true)}
             >
               Add
             </Button>
@@ -72,12 +91,21 @@ class Product extends Component {
             pagination={paginationProps}
             brands={brands}
             categories={categories}
+            onUpdate={this.onUpdate}
           />
         </Card>
 
+        <UpdateForm
+          modalVisible={modalUpdateVisible}
+          handleModalVisible={this.handleModalUpdate}
+          brands={brands}
+          categories={categories}
+          handleUpdate={this.handleUpdate}
+        />
+
         <CreateForm
-          modalVisible={modalVisible}
-          handleModalVisible={this.handleModalVisible}
+          modalVisible={modalCreateVisible}
+          handleModalVisible={this.handleModalCreate}
           brands={brands}
           categories={categories}
           handleAdd={this.handleAdd}
@@ -98,5 +126,13 @@ const mapStateToProps = ({ auth, products, brands, categories }) => {
 
 export default connect(
   mapStateToProps,
-  { getProducts, getBrands, getCategories, addProduct, clearModal }
+  {
+    getProducts,
+    getBrands,
+    getCategories,
+    addProduct,
+    updateProduct,
+    initUpdateForm,
+    clearModal
+  }
 )(Product);

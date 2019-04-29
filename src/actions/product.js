@@ -5,6 +5,12 @@ import {
   ADD_PRODUCT,
   CREATE_PRODUCT,
   ERROR_CREATE_PRODUCT,
+  EDIT_PRODUCT,
+  UPDATE_PRODUCT,
+  ERROR_UPDATE_PRODUCT,
+  SET_INITIAL_UPDATE,
+  ERROR_SET_INITIAL_UPDATE,
+  GET_INITIAL_UPDATE,
   CLEAR_MODAL,
   UPDATE_FILTERS
 } from "./types";
@@ -55,6 +61,37 @@ export const addProduct = data => {
       return { type: ERROR_CREATE_PRODUCT, payload: error };
     },
     label: ADD_PRODUCT
+  });
+};
+
+export const updateProduct = data => {
+  return apiAction({
+    url: `products/update/${data.id}`,
+    method: "PUT",
+    jwt: true,
+    data,
+    onSuccess: data => {
+      return { type: UPDATE_PRODUCT, payload: data };
+    },
+    onFailure: error => {
+      return { type: ERROR_UPDATE_PRODUCT, payload: error };
+    },
+    label: EDIT_PRODUCT
+  });
+};
+
+export const initUpdateForm = data => {
+  return apiAction({
+    url: `products/get/${data.id}`,
+    method: "GET",
+    jwt: true,
+    onSuccess: data => {
+      return { type: SET_INITIAL_UPDATE, payload: data };
+    },
+    onFailure: error => {
+      return { type: ERROR_SET_INITIAL_UPDATE, payload: error };
+    },
+    label: GET_INITIAL_UPDATE
   });
 };
 
