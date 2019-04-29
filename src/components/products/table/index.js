@@ -160,7 +160,8 @@ class TableProduct extends Component {
           <ActionRender
             text={text}
             record={record}
-            onClick={item => console.log(item)}
+            onUpdate={this.props.onUpdate}
+            onDelete={item => console.log(item)}
           />
         )
       }

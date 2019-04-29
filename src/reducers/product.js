@@ -7,16 +7,28 @@ import {
   CREATE_PRODUCT,
   ERROR_CREATE_PRODUCT,
   CLEAR_MODAL,
-  UPDATE_FILTERS
+  UPDATE_FILTERS,
+  EDIT_PRODUCT,
+  UPDATE_PRODUCT,
+  ERROR_UPDATE_PRODUCT,
+  SET_INITIAL_UPDATE,
+  GET_INITIAL_UPDATE
 } from "../actions/types";
 
 const INITIAL_STATE = {
   isLoading: false,
   isCreating: false,
+  isUpdating: false,
   data: [],
   error: null,
   created: null,
   createErrors: [],
+  edit: {
+    data: null,
+    loading: false
+  },
+  updated: null,
+  updateErrors: [],
   filters: {}
 };
 
@@ -42,12 +54,36 @@ export default (state = INITIAL_STATE, action) => {
         createErrors: action.payload.response
       };
 
+    case UPDATE_PRODUCT:
+      return {
+        ...state,
+        updated: true,
+        updateErrors: []
+      };
+
+    case ERROR_UPDATE_PRODUCT:
+      return {
+        ...state,
+        updated: false,
+        updateErrors: action.payload.response
+      };
+
+    case SET_INITIAL_UPDATE:
+      return {
+        ...state,
+        edit: { ...state.edit, data: action.payload.response }
+      };
+
     case CLEAR_MODAL:
       return {
         ...state,
         created: null,
         isCreating: false,
-        createErrors: []
+        createErrors: [],
+        updated: null,
+        isUpdating: false,
+        updateErrors: [],
+        edit: { data: null, loading: false }
       };
 
     case UPDATE_FILTERS:
@@ -68,6 +104,19 @@ export default (state = INITIAL_STATE, action) => {
             ...state,
             isCreating: true
           };
+        case EDIT_PRODUCT:
+          return {
+            ...state,
+            isUpdating: true
+          };
+        case GET_INITIAL_UPDATE:
+          return {
+            ...state,
+            edit: {
+              ...state.edit,
+              loading: true
+            }
+          };
         default:
           return state;
       }
@@ -82,6 +131,16 @@ export default (state = INITIAL_STATE, action) => {
           return {
             ...state,
             isCreating: false
+          };
+        case EDIT_PRODUCT:
+          return {
+            ...state,
+            isUpdating: false
+          };
+        case GET_INITIAL_UPDATE:
+          return {
+            ...state,
+            edit: { ...state.edit, loading: false }
           };
         default:
           return state;
