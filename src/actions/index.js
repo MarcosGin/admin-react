@@ -3,6 +3,8 @@ export {
   getProducts,
   addProduct,
   updateProduct,
+  deleteProduct,
+  setCurrentDelete,
   initUpdateForm,
   clearModal
 } from "./product";

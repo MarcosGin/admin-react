@@ -9,6 +9,8 @@ import {
   getCategories,
   addProduct,
   updateProduct,
+  deleteProduct,
+  setCurrentDelete,
   initUpdateForm,
   clearModal
 } from "../../actions";
@@ -48,6 +50,28 @@ class Product extends Component {
       modalUpdateVisible: !!flag
     });
   };
+
+  handleDelete = data => {
+    this.props.setCurrentDelete(data.id);
+    this.props.deleteProduct(data);
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    const { products: prevProducts } = prevProps;
+    const { products: currentProducts } = this.props;
+
+    if (
+      prevProducts.remove.status !== currentProducts.remove.status ||
+      prevProducts.remove.loading !== currentProducts.remove.loading
+    ) {
+      if (
+        currentProducts.remove.status === true &&
+        !currentProducts.remove.loading
+      ) {
+        this.props.getProducts(this.props.products.filters);
+      }
+    }
+  }
 
   componentDidMount() {
     this.props.getProducts({ pagination: { current: 1, pageSize: 10 } });
@@ -92,6 +116,7 @@ class Product extends Component {
             brands={brands}
             categories={categories}
             onUpdate={this.onUpdate}
+            onDelete={this.handleDelete}
           />
         </Card>
 
@@ -132,6 +157,8 @@ export default connect(
     getCategories,
     addProduct,
     updateProduct,
+    deleteProduct,
+    setCurrentDelete,
     initUpdateForm,
     clearModal
   }
