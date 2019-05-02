@@ -161,7 +161,8 @@ class TableProduct extends Component {
             text={text}
             record={record}
             onUpdate={this.props.onUpdate}
-            onDelete={item => console.log(item)}
+            onDelete={this.props.onDelete}
+            textDelete="Are you sure to delete this product?"
           />
         )
       }
