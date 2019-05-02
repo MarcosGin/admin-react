@@ -2,7 +2,14 @@ import React, { Fragment } from "react";
 import { Button, Divider, Popconfirm, Icon } from "antd";
 
 const ActionRender = props => {
-  const { record, onUpdate, onDelete, textDelete } = props;
+  const {
+    record,
+    onUpdate,
+    onDelete,
+    textDelete,
+    isDeleting,
+    isCurrent
+  } = props;
 
   const handleClick = action => e => {
     e.stopPropagation();
@@ -10,10 +17,19 @@ const ActionRender = props => {
     return action === "edit" ? onUpdate(record) : onDelete(record);
   };
 
-  return (
-    <Fragment>
-      <Button onClick={handleClick("edit")} icon="edit" size="small" />
-      <Divider type="vertical" />
+  const getDeleteButton = () => {
+    if (isDeleting) {
+      return (
+        <Button
+          icon="delete"
+          size="small"
+          loading={isCurrent}
+          disabled={!isCurrent}
+        />
+      );
+    }
+
+    return (
       <Popconfirm
         onConfirm={handleClick("delete")}
         title={textDelete}
@@ -24,6 +40,14 @@ const ActionRender = props => {
       >
         <Button icon="delete" size="small" />
       </Popconfirm>
+    );
+  };
+
+  return (
+    <Fragment>
+      <Button onClick={handleClick("edit")} icon="edit" size="small" />
+      <Divider type="vertical" />
+      {getDeleteButton()}
     </Fragment>
   );
 };
