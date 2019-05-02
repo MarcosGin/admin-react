@@ -161,7 +161,10 @@ class TableProduct extends Component {
             text={text}
             record={record}
             onUpdate={this.props.onUpdate}
-            onDelete={item => console.log(item)}
+            onDelete={this.props.onDelete}
+            isCurrent={record.id === this.props.products.remove.current}
+            isDeleting={this.props.products.remove.loading}
+            textDelete="Are you sure to delete this product?"
           />
         )
       }
@@ -180,7 +183,14 @@ class TableProduct extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ products }) => {
+  return {
+    products
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { getProducts }
 )(TableProduct);

@@ -12,7 +12,11 @@ import {
   UPDATE_PRODUCT,
   ERROR_UPDATE_PRODUCT,
   SET_INITIAL_UPDATE,
-  GET_INITIAL_UPDATE
+  GET_INITIAL_UPDATE,
+  REMOVE_PRODUCT,
+  DELETE_PRODUCT,
+  SET_CURRENT_DELETE,
+  ERROR_DELETE_PRODUCT
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -25,6 +29,11 @@ const INITIAL_STATE = {
   createErrors: [],
   edit: {
     data: null,
+    loading: false
+  },
+  remove: {
+    status: null,
+    current: null,
     loading: false
   },
   updated: null,
@@ -74,6 +83,33 @@ export default (state = INITIAL_STATE, action) => {
         edit: { ...state.edit, data: action.payload.response }
       };
 
+    case DELETE_PRODUCT:
+      return {
+        ...state,
+        remove: {
+          ...state.remove,
+          status: true
+        }
+      };
+
+    case ERROR_DELETE_PRODUCT:
+      return {
+        ...state,
+        remove: {
+          ...state.remove,
+          status: false
+        }
+      };
+
+    case SET_CURRENT_DELETE:
+      return {
+        ...state,
+        remove: {
+          ...state.remove,
+          current: action.payload
+        }
+      };
+
     case CLEAR_MODAL:
       return {
         ...state,
@@ -117,6 +153,14 @@ export default (state = INITIAL_STATE, action) => {
               loading: true
             }
           };
+        case REMOVE_PRODUCT:
+          return {
+            ...state,
+            remove: {
+              ...state.remove,
+              loading: true
+            }
+          };
         default:
           return state;
       }
@@ -141,6 +185,14 @@ export default (state = INITIAL_STATE, action) => {
           return {
             ...state,
             edit: { ...state.edit, loading: false }
+          };
+        case REMOVE_PRODUCT:
+          return {
+            ...state,
+            remove: {
+              ...state.remove,
+              loading: false
+            }
           };
         default:
           return state;

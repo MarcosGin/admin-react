@@ -1,21 +1,53 @@
 import React, { Fragment } from "react";
-import { Button, Divider } from "antd";
+import { Button, Divider, Popconfirm, Icon } from "antd";
 
 const ActionRender = props => {
-  const { record, onUpdate, onDelete } = props;
+  const {
+    record,
+    onUpdate,
+    onDelete,
+    textDelete,
+    isDeleting,
+    isCurrent
+  } = props;
 
-  // Alternative is using currying fn = (param) => (e) => {}
   const handleClick = action => e => {
     e.stopPropagation();
 
     return action === "edit" ? onUpdate(record) : onDelete(record);
   };
 
+  const getDeleteButton = () => {
+    if (isDeleting) {
+      return (
+        <Button
+          icon="delete"
+          size="small"
+          loading={isCurrent}
+          disabled={!isCurrent}
+        />
+      );
+    }
+
+    return (
+      <Popconfirm
+        onConfirm={handleClick("delete")}
+        title={textDelete}
+        okType="danger"
+        okText="Delete"
+        placement="left"
+        icon={<Icon type="warning" style={{ color: "red" }} />}
+      >
+        <Button icon="delete" size="small" />
+      </Popconfirm>
+    );
+  };
+
   return (
     <Fragment>
       <Button onClick={handleClick("edit")} icon="edit" size="small" />
       <Divider type="vertical" />
-      <Button onClick={handleClick("delete")} icon="delete" size="small" />
+      {getDeleteButton()}
     </Fragment>
   );
 };

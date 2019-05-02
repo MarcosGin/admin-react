@@ -11,6 +11,10 @@ import {
   SET_INITIAL_UPDATE,
   ERROR_SET_INITIAL_UPDATE,
   GET_INITIAL_UPDATE,
+  REMOVE_PRODUCT,
+  DELETE_PRODUCT,
+  ERROR_DELETE_PRODUCT,
+  SET_CURRENT_DELETE,
   CLEAR_MODAL,
   UPDATE_FILTERS
 } from "./types";
@@ -80,6 +84,21 @@ export const updateProduct = data => {
   });
 };
 
+export const deleteProduct = data => {
+  return apiAction({
+    url: `products/delete/${data.id}`,
+    method: "DELETE",
+    jwt: true,
+    onSuccess: data => {
+      return { type: DELETE_PRODUCT, payload: data };
+    },
+    onFailure: error => {
+      return { type: ERROR_DELETE_PRODUCT, payload: error };
+    },
+    label: REMOVE_PRODUCT
+  });
+};
+
 export const initUpdateForm = data => {
   return apiAction({
     url: `products/get/${data.id}`,
@@ -93,6 +112,13 @@ export const initUpdateForm = data => {
     },
     label: GET_INITIAL_UPDATE
   });
+};
+
+export const setCurrentDelete = id => {
+  return {
+    type: SET_CURRENT_DELETE,
+    payload: id
+  };
 };
 
 export const clearModal = () => {
