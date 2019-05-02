@@ -1,10 +1,9 @@
 import React, { Fragment } from "react";
-import { Button, Divider } from "antd";
+import { Button, Divider, Popconfirm, Icon } from "antd";
 
 const ActionRender = props => {
-  const { record, onUpdate, onDelete } = props;
+  const { record, onUpdate, onDelete, textDelete } = props;
 
-  // Alternative is using currying fn = (param) => (e) => {}
   const handleClick = action => e => {
     e.stopPropagation();
 
@@ -15,7 +14,16 @@ const ActionRender = props => {
     <Fragment>
       <Button onClick={handleClick("edit")} icon="edit" size="small" />
       <Divider type="vertical" />
-      <Button onClick={handleClick("delete")} icon="delete" size="small" />
+      <Popconfirm
+        onConfirm={handleClick("delete")}
+        title={textDelete}
+        okType="danger"
+        okText="Delete"
+        placement="left"
+        icon={<Icon type="warning" style={{ color: "red" }} />}
+      >
+        <Button icon="delete" size="small" />
+      </Popconfirm>
     </Fragment>
   );
 };
