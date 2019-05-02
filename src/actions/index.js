@@ -4,6 +4,7 @@ export {
   addProduct,
   updateProduct,
   deleteProduct,
+  getProduct,
   setCurrentDelete,
   initUpdateForm,
   clearModal

@@ -15,6 +15,9 @@ import {
   DELETE_PRODUCT,
   ERROR_DELETE_PRODUCT,
   SET_CURRENT_DELETE,
+  GET_PRODUCT,
+  SET_PRODUCT,
+  ERROR_SET_PRODUCT,
   CLEAR_MODAL,
   UPDATE_FILTERS
 } from "./types";
@@ -111,6 +114,21 @@ export const initUpdateForm = data => {
       return { type: ERROR_SET_INITIAL_UPDATE, payload: error };
     },
     label: GET_INITIAL_UPDATE
+  });
+};
+
+export const getProduct = data => {
+  return apiAction({
+    url: `products/get/${data.id}`,
+    method: "GET",
+    jwt: true,
+    onSuccess: data => {
+      return { type: SET_PRODUCT, payload: data };
+    },
+    onFailure: error => {
+      return { type: ERROR_SET_PRODUCT, payload: error };
+    },
+    label: GET_PRODUCT
   });
 };
 

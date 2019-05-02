@@ -16,6 +16,9 @@ import {
   REMOVE_PRODUCT,
   DELETE_PRODUCT,
   SET_CURRENT_DELETE,
+  GET_PRODUCT,
+  SET_PRODUCT,
+  ERROR_SET_PRODUCT,
   ERROR_DELETE_PRODUCT
 } from "../actions/types";
 
@@ -27,6 +30,10 @@ const INITIAL_STATE = {
   error: null,
   created: null,
   createErrors: [],
+  view: {
+    current: null,
+    loading: false
+  },
   edit: {
     data: null,
     loading: false
@@ -110,6 +117,15 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
 
+    case SET_PRODUCT:
+      return {
+        ...state,
+        view: {
+          ...state.view,
+          current: action.payload.response
+        }
+      };
+
     case CLEAR_MODAL:
       return {
         ...state,
@@ -161,6 +177,14 @@ export default (state = INITIAL_STATE, action) => {
               loading: true
             }
           };
+        case GET_PRODUCT:
+          return {
+            ...state,
+            view: {
+              ...state.view,
+              loading: true
+            }
+          };
         default:
           return state;
       }
@@ -191,6 +215,14 @@ export default (state = INITIAL_STATE, action) => {
             ...state,
             remove: {
               ...state.remove,
+              loading: false
+            }
+          };
+        case GET_PRODUCT:
+          return {
+            ...state,
+            view: {
+              ...state.view,
               loading: false
             }
           };
