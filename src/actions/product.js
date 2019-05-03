@@ -19,7 +19,8 @@ import {
   SET_PRODUCT,
   ERROR_SET_PRODUCT,
   CLEAR_MODAL,
-  UPDATE_FILTERS
+  UPDATE_FILTERS,
+  NOTIFICATION
 } from "./types";
 import { apiAction } from "./api";
 
@@ -78,7 +79,17 @@ export const updateProduct = data => {
     jwt: true,
     data,
     onSuccess: data => {
-      return { type: UPDATE_PRODUCT, payload: data };
+      return (dispatch, getState) => {
+        dispatch({ type: UPDATE_PRODUCT, payload: data });
+        dispatch({
+          type: NOTIFICATION,
+          payload: {
+            type: "success",
+            title: "Update product",
+            content: data.response.message
+          }
+        });
+      };
     },
     onFailure: error => {
       return { type: ERROR_UPDATE_PRODUCT, payload: error };
