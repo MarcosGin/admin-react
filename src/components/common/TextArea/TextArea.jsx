@@ -14,11 +14,15 @@ class TextArea extends Component {
 
   onFocus = () => {
     this.setState({ focused: true });
-    this.props.onFocus();
+    if (this.props.onFocus) {
+      this.props.onFocus();
+    }
   };
   onBlur = () => {
     this.setState({ focused: false });
-    this.props.onBlur();
+    if (this.props.onBlur) {
+      this.props.onBlur();
+    }
   };
 
   render() {

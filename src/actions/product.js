@@ -15,6 +15,9 @@ import {
   DELETE_PRODUCT,
   ERROR_DELETE_PRODUCT,
   SET_CURRENT_DELETE,
+  GET_PRODUCT,
+  SET_PRODUCT,
+  ERROR_SET_PRODUCT,
   CLEAR_MODAL,
   UPDATE_FILTERS
 } from "./types";
@@ -114,11 +117,39 @@ export const initUpdateForm = data => {
   });
 };
 
+export const getProduct = data => {
+  return apiAction({
+    url: `products/get/${data.id}`,
+    method: "GET",
+    jwt: true,
+    onSuccess: data => {
+      return { type: SET_PRODUCT, payload: data };
+    },
+    onFailure: error => {
+      return { type: ERROR_SET_PRODUCT, payload: error };
+    },
+    label: GET_PRODUCT
+  });
+};
+
 export const setCurrentDelete = id => {
   return {
     type: SET_CURRENT_DELETE,
     payload: id
   };
+};
+
+export const setUpdateForm = data => {
+  return {
+    type: SET_INITIAL_UPDATE,
+    payload: { response: data }
+  };
+};
+
+export const reloadViewProduct = () => (dispatch, getState) => {
+  const data = getState().products.view.current;
+
+  dispatch(getProduct(data));
 };
 
 export const clearModal = () => {

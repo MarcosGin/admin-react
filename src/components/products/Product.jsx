@@ -10,18 +10,22 @@ import {
   addProduct,
   updateProduct,
   deleteProduct,
+  getProduct,
   setCurrentDelete,
   initUpdateForm,
+  reloadViewProduct,
   clearModal
 } from "../../actions";
 import CreateForm from "./CreateForm";
 import TableProduct from "./table";
 import UpdateForm from "./UpdateForm";
+import View from "./View";
 
 class Product extends Component {
   state = {
     modalCreateVisible: false,
-    modalUpdateVisible: false
+    modalUpdateVisible: false,
+    drawerViewVisible: false
   };
 
   handleModalCreate = flag => {
@@ -56,6 +60,30 @@ class Product extends Component {
     this.props.deleteProduct(data);
   };
 
+  handleDrawerView = flag => {
+    this.setState({
+      drawerViewVisible: !!flag
+    });
+  };
+
+  onView = data => {
+    this.handleDrawerView(true);
+
+    if (
+      this.props.products.view.current !== null &&
+      this.props.products.view.current.id === data.id
+    ) {
+      return;
+    }
+    this.props.getProduct(data);
+  };
+
+  reloadViewProduct = () => {
+    if (this.state.drawerViewVisible) {
+      this.props.reloadViewProduct();
+    }
+  };
+
   componentDidUpdate(prevProps, prevState) {
     const { products: prevProducts } = prevProps;
     const { products: currentProducts } = this.props;
@@ -87,7 +115,11 @@ class Product extends Component {
       isLoading: isLoadingCategory
     } = this.props.categories;
 
-    const { modalCreateVisible, modalUpdateVisible } = this.state;
+    const {
+      modalCreateVisible,
+      modalUpdateVisible,
+      drawerViewVisible
+    } = this.state;
 
     const paginationProps = products.pagination
       ? { showSizeChanger: true, ...products.pagination }
@@ -117,12 +149,20 @@ class Product extends Component {
             categories={categories}
             onUpdate={this.onUpdate}
             onDelete={this.handleDelete}
+            onView={this.onView}
           />
         </Card>
+
+        <View
+          drawerVisible={drawerViewVisible}
+          handleDrawerVisible={this.handleDrawerView}
+          handleModalUpdate={this.handleModalUpdate}
+        />
 
         <UpdateForm
           modalVisible={modalUpdateVisible}
           handleModalVisible={this.handleModalUpdate}
+          reloadViewProduct={this.reloadViewProduct}
           brands={brands}
           categories={categories}
           handleUpdate={this.handleUpdate}
@@ -158,8 +198,10 @@ export default connect(
     addProduct,
     updateProduct,
     deleteProduct,
+    getProduct,
     setCurrentDelete,
     initUpdateForm,
+    reloadViewProduct,
     clearModal
   }
 )(Product);

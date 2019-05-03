@@ -29,9 +29,7 @@ class TableProduct extends Component {
 
   onRow = (record, rowIndex) => {
     return {
-      onClick: e => {
-        // dispatch on select product view
-      }
+      onClick: e => this.props.onView(record)
     };
   };
 

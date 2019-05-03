@@ -4,8 +4,11 @@ export {
   addProduct,
   updateProduct,
   deleteProduct,
+  getProduct,
   setCurrentDelete,
   initUpdateForm,
+  setUpdateForm,
+  reloadViewProduct,
   clearModal
 } from "./product";
 export { getBrands } from "./brand";
