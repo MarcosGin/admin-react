@@ -26,7 +26,11 @@ class UpdateForm extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { products: prevProducts } = prevProps;
-    const { products: currentProducts, handleModalVisible } = this.props;
+    const {
+      products: currentProducts,
+      handleModalVisible,
+      reloadViewProduct
+    } = this.props;
 
     if (
       prevProducts.updated !== currentProducts.updated ||
@@ -34,6 +38,7 @@ class UpdateForm extends Component {
     ) {
       if (currentProducts.updated === true && !currentProducts.isUpdating) {
         handleModalVisible();
+        reloadViewProduct();
         this.props.getProducts(this.props.products.filters);
       }
     }

@@ -1,9 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { Drawer, Spin, Row, Col, Divider } from "antd";
+import { Drawer, Spin, Row, Col, Divider, Button } from "antd";
 import Currency from "react-currency-formatter";
 
+import { setUpdateForm } from "../../actions";
+
 import TextArea from "../common/TextArea/TextArea";
+
 const ViewItem = ({ label, content }) => (
   <div
     style={{
@@ -26,6 +29,11 @@ const ViewItem = ({ label, content }) => (
   </div>
 );
 class View extends Component {
+  onUpdate = () => {
+    this.props.handleModalUpdate(true);
+    this.props.setUpdateForm(this.props.products.view.current);
+  };
+
   render() {
     const {
       drawerVisible,
@@ -94,6 +102,23 @@ class View extends Component {
         onClose={() => handleDrawerVisible(false)}
       >
         <Spin spinning={view.loading}>{getContent()}</Spin>
+
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            bottom: 0,
+            width: "100%",
+            borderTop: "1px solid #e9e9e9",
+            padding: "10px 16px",
+            background: "#fff",
+            textAlign: "right"
+          }}
+        >
+          <Button onClick={this.onUpdate} type="primary">
+            Edit
+          </Button>
+        </div>
       </Drawer>
     );
   }
@@ -105,4 +130,7 @@ const mapStateToProps = ({ products }) => {
   };
 };
 
-export default connect(mapStateToProps)(View);
+export default connect(
+  mapStateToProps,
+  { setUpdateForm }
+)(View);

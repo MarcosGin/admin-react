@@ -13,6 +13,7 @@ import {
   getProduct,
   setCurrentDelete,
   initUpdateForm,
+  reloadViewProduct,
   clearModal
 } from "../../actions";
 import CreateForm from "./CreateForm";
@@ -75,6 +76,12 @@ class Product extends Component {
       return;
     }
     this.props.getProduct(data);
+  };
+
+  reloadViewProduct = () => {
+    if (this.state.drawerViewVisible) {
+      this.props.reloadViewProduct();
+    }
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -149,11 +156,13 @@ class Product extends Component {
         <View
           drawerVisible={drawerViewVisible}
           handleDrawerVisible={this.handleDrawerView}
+          handleModalUpdate={this.handleModalUpdate}
         />
 
         <UpdateForm
           modalVisible={modalUpdateVisible}
           handleModalVisible={this.handleModalUpdate}
+          reloadViewProduct={this.reloadViewProduct}
           brands={brands}
           categories={categories}
           handleUpdate={this.handleUpdate}
@@ -192,6 +201,7 @@ export default connect(
     getProduct,
     setCurrentDelete,
     initUpdateForm,
+    reloadViewProduct,
     clearModal
   }
 )(Product);

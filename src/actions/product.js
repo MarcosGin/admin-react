@@ -139,6 +139,19 @@ export const setCurrentDelete = id => {
   };
 };
 
+export const setUpdateForm = data => {
+  return {
+    type: SET_INITIAL_UPDATE,
+    payload: { response: data }
+  };
+};
+
+export const reloadViewProduct = () => (dispatch, getState) => {
+  const data = getState().products.view.current;
+
+  dispatch(getProduct(data));
+};
+
 export const clearModal = () => {
   return {
     type: CLEAR_MODAL,
