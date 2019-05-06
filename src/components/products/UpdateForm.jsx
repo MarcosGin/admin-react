@@ -38,7 +38,7 @@ class UpdateForm extends Component {
     ) {
       if (currentProducts.updated === true && !currentProducts.isUpdating) {
         handleModalVisible();
-        reloadViewProduct();
+        reloadViewProduct(this.props.products.edit.data);
         this.props.getProducts(this.props.products.filters);
       }
     }
@@ -83,6 +83,7 @@ class UpdateForm extends Component {
         okText="Update"
         okButtonProps={{ loading: isUpdating, disabled: edit.loading }}
         cancelButtonProps={{ disabled: isUpdating || edit.loading }}
+        zIndex={1001}
       >
         {getForm()}
       </Modal>

@@ -78,8 +78,11 @@ class Product extends Component {
     this.props.getProduct(data);
   };
 
-  reloadViewProduct = () => {
-    if (this.state.drawerViewVisible) {
+  reloadViewProduct = data => {
+    const { current } = this.props.products.view;
+    console.log(data);
+    console.log(current);
+    if (current !== null && current.id === data.id) {
       this.props.reloadViewProduct();
     }
   };
