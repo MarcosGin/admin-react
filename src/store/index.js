@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import reducers from "../reducers";
 import apiMiddleware from "../middleware/api";
 import localStorageMiddleware from "../middleware/localStorage";
-import errorMiddleware from "../middleware/error";
+import notificationMiddleware from "../middleware/notification";
 
 export const history = createBrowserHistory();
 
@@ -18,7 +18,7 @@ export const store = createStore(
     applyMiddleware(
       apiMiddleware,
       localStorageMiddleware,
-      errorMiddleware,
+      notificationMiddleware,
       thunk,
       routerMiddleware(history)
     )

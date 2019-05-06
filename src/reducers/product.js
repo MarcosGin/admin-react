@@ -1,5 +1,6 @@
 import {
   GET_PRODUCTS,
+  ERROR_ALL_PRODUCTS,
   API_START,
   API_END,
   ALL_PRODUCTS,
@@ -54,6 +55,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         data: action.payload.response
+      };
+
+    case ERROR_ALL_PRODUCTS:
+      return {
+        ...state,
+        data: []
       };
 
     case CREATE_PRODUCT:
