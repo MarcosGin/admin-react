@@ -41,11 +41,11 @@ class View extends Component {
       products: { view }
     } = this.props;
 
-    if (view.current === null) {
-      return null;
-    }
-
     const getContent = () => {
+      if (view.current === null) {
+        return null;
+      }
+
       return (
         <Fragment>
           <Row>
@@ -101,7 +101,9 @@ class View extends Component {
         visible={drawerVisible}
         onClose={() => handleDrawerVisible(false)}
       >
-        <Spin spinning={view.loading}>{getContent()}</Spin>
+        <Spin spinning={view.loading} style={{ width: "100%", height: "100%" }}>
+          {getContent()}
+        </Spin>
 
         <div
           style={{

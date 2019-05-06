@@ -20,7 +20,8 @@ import {
   GET_PRODUCT,
   SET_PRODUCT,
   ERROR_SET_PRODUCT,
-  ERROR_DELETE_PRODUCT
+  ERROR_DELETE_PRODUCT,
+  ERROR_SET_INITIAL_UPDATE
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -37,6 +38,7 @@ const INITIAL_STATE = {
   },
   edit: {
     data: null,
+    error: null,
     loading: false
   },
   remove: {
@@ -97,6 +99,12 @@ export default (state = INITIAL_STATE, action) => {
         edit: { ...state.edit, data: action.payload.response }
       };
 
+    case ERROR_SET_INITIAL_UPDATE:
+      return {
+        ...state,
+        edit: { ...state.edit, error: action.payload.response }
+      };
+
     case DELETE_PRODUCT:
       return {
         ...state,
@@ -142,7 +150,7 @@ export default (state = INITIAL_STATE, action) => {
         updated: null,
         isUpdating: false,
         updateErrors: [],
-        edit: { data: null, loading: false }
+        edit: { data: null, error: null, loading: false }
       };
 
     case UPDATE_FILTERS:
