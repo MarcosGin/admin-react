@@ -63,7 +63,17 @@ export const addProduct = data => {
     jwt: true,
     data,
     onSuccess: data => {
-      return { type: CREATE_PRODUCT, payload: data };
+      return (dispatch, getState) => {
+        dispatch({ type: CREATE_PRODUCT, payload: data });
+        dispatch({
+          type: NOTIFICATION,
+          payload: {
+            type: "success",
+            title: "Create product",
+            content: data.response.message
+          }
+        });
+      };
     },
     onFailure: error => {
       return { type: ERROR_CREATE_PRODUCT, payload: error };
@@ -104,7 +114,17 @@ export const deleteProduct = data => {
     method: "DELETE",
     jwt: true,
     onSuccess: data => {
-      return { type: DELETE_PRODUCT, payload: data };
+      return (dispatch, getState) => {
+        dispatch({ type: DELETE_PRODUCT, payload: data });
+        dispatch({
+          type: NOTIFICATION,
+          payload: {
+            type: "success",
+            title: "Delete product",
+            content: data.response.message
+          }
+        });
+      };
     },
     onFailure: error => {
       return { type: ERROR_DELETE_PRODUCT, payload: error };
