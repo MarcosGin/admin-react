@@ -38,7 +38,7 @@ const ActionRender = props => {
         placement="left"
         icon={<Icon type="warning" style={{ color: "red" }} />}
       >
-        <Button icon="delete" size="small" />
+        <Button icon="delete" size="small" onClick={e => e.stopPropagation()} />
       </Popconfirm>
     );
   };
