@@ -9,7 +9,8 @@ export {
   initUpdateForm,
   setUpdateForm,
   reloadViewProduct,
-  clearModal
+  clearModal,
+  clearDrawer
 } from "./product";
 export { getBrands } from "./brand";
 export { getCategories } from "./category";

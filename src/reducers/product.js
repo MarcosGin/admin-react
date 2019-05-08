@@ -7,7 +7,6 @@ import {
   ADD_PRODUCT,
   CREATE_PRODUCT,
   ERROR_CREATE_PRODUCT,
-  CLEAR_MODAL,
   UPDATE_FILTERS,
   EDIT_PRODUCT,
   UPDATE_PRODUCT,
@@ -21,7 +20,9 @@ import {
   SET_PRODUCT,
   ERROR_SET_PRODUCT,
   ERROR_DELETE_PRODUCT,
-  ERROR_SET_INITIAL_UPDATE
+  ERROR_SET_INITIAL_UPDATE,
+  CLEAR_MODAL,
+  CLEAR_DRAWER
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -33,6 +34,7 @@ const INITIAL_STATE = {
   created: null,
   createErrors: [],
   view: {
+    error: null,
     current: null,
     loading: false
   },
@@ -141,6 +143,15 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
 
+    case ERROR_SET_PRODUCT:
+      return {
+        ...state,
+        view: {
+          ...state.view,
+          error: action.payload.response
+        }
+      };
+
     case CLEAR_MODAL:
       return {
         ...state,
@@ -151,6 +162,12 @@ export default (state = INITIAL_STATE, action) => {
         isUpdating: false,
         updateErrors: [],
         edit: { data: null, error: null, loading: false }
+      };
+
+    case CLEAR_DRAWER:
+      return {
+        ...state,
+        view: { current: null, error: null, loading: false }
       };
 
     case UPDATE_FILTERS:

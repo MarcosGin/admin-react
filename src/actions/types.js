@@ -26,6 +26,7 @@ export const GET_PRODUCT = "GET_PRODUCT";
 export const SET_PRODUCT = "SET_PRODUCT";
 export const ERROR_SET_PRODUCT = "ERROR_SET_PRODUCT";
 export const CLEAR_MODAL = "CLEAR_MODAL";
+export const CLEAR_DRAWER = "CLEAR_DRAWER";
 export const UPDATE_FILTERS = "UPDATE_FILTERS";
 
 export const GET_BRANDS = "GET_BRANDS";
