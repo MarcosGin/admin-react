@@ -7,7 +7,6 @@ import {
   ADD_PRODUCT,
   CREATE_PRODUCT,
   ERROR_CREATE_PRODUCT,
-  CLEAR_MODAL,
   UPDATE_FILTERS,
   EDIT_PRODUCT,
   UPDATE_PRODUCT,
@@ -20,7 +19,10 @@ import {
   GET_PRODUCT,
   SET_PRODUCT,
   ERROR_SET_PRODUCT,
-  ERROR_DELETE_PRODUCT
+  ERROR_DELETE_PRODUCT,
+  ERROR_SET_INITIAL_UPDATE,
+  CLEAR_MODAL,
+  CLEAR_DRAWER
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -32,11 +34,13 @@ const INITIAL_STATE = {
   created: null,
   createErrors: [],
   view: {
+    error: null,
     current: null,
     loading: false
   },
   edit: {
     data: null,
+    error: null,
     loading: false
   },
   remove: {
@@ -97,6 +101,12 @@ export default (state = INITIAL_STATE, action) => {
         edit: { ...state.edit, data: action.payload.response }
       };
 
+    case ERROR_SET_INITIAL_UPDATE:
+      return {
+        ...state,
+        edit: { ...state.edit, error: action.payload.response }
+      };
+
     case DELETE_PRODUCT:
       return {
         ...state,
@@ -133,6 +143,15 @@ export default (state = INITIAL_STATE, action) => {
         }
       };
 
+    case ERROR_SET_PRODUCT:
+      return {
+        ...state,
+        view: {
+          ...state.view,
+          error: action.payload.response
+        }
+      };
+
     case CLEAR_MODAL:
       return {
         ...state,
@@ -142,7 +161,13 @@ export default (state = INITIAL_STATE, action) => {
         updated: null,
         isUpdating: false,
         updateErrors: [],
-        edit: { data: null, loading: false }
+        edit: { data: null, error: null, loading: false }
+      };
+
+    case CLEAR_DRAWER:
+      return {
+        ...state,
+        view: { current: null, error: null, loading: false }
       };
 
     case UPDATE_FILTERS:

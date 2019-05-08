@@ -61,6 +61,12 @@ class UpdateForm extends Component {
           </div>
         );
       }
+
+      if (edit.error) {
+        handleModalVisible();
+        return null;
+      }
+
       return (
         <EditProductForm
           onSubmit={this.onUpdate}

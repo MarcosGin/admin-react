@@ -19,6 +19,7 @@ import {
   SET_PRODUCT,
   ERROR_SET_PRODUCT,
   CLEAR_MODAL,
+  CLEAR_DRAWER,
   UPDATE_FILTERS,
   NOTIFICATION
 } from "./types";
@@ -157,6 +158,8 @@ export const reloadViewProduct = () => (dispatch, getState) => {
 };
 
 export const clearModal = () => ({ type: CLEAR_MODAL, payload: {} });
+
+export const clearDrawer = () => ({ type: CLEAR_DRAWER, payload: {} });
 
 export const updateFilters = (pagination, filters, sorter = null) => ({
   type: UPDATE_FILTERS,
