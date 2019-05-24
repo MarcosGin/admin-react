@@ -30,7 +30,7 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
   let userJwt = null;
   if (jwt) {
     userJwt = getState().auth.jwt;
-    headers["Authorization"] = userJwt;
+    headers["Authorization"] = `Bearer ${userJwt}`;
   }
 
   if (label) {
@@ -47,7 +47,7 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
     .then(({ data }) => {
       dispatch(onSuccess(data));
 
-      if (jwt && userJwt !== data.jwt) {
+      if (jwt && data.jwt && userJwt !== data.jwt) {
         dispatch(updateJwt(data.jwt));
       }
     })
