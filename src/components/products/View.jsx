@@ -47,7 +47,7 @@ class View extends Component {
           </Row>
           <Row>
             <Col span={12}>
-              <ViewItem label="Brand" content={view.current.mark.name} />
+              <ViewItem label="Brand" content={view.current.brand.name} />
             </Col>
             <Col span={12}>
               <ViewItem label="Category" content={view.current.category.name} />

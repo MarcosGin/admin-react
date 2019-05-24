@@ -115,7 +115,7 @@ class EditProductForm extends Component {
           component={this.renderEditorArea}
         />
         <Field
-          name="mark"
+          name="brand"
           placeholder="Brand"
           options={this.props.brands}
           component={this.renderSelect}
@@ -150,7 +150,7 @@ class EditProductForm extends Component {
   }
 }
 
-const validate = ({ title, description, mark, category, price }) => {
+const validate = ({ title, description, brand, category, price }) => {
   const errors = {};
   if (!title) {
     errors.title = "Please enter a title";
@@ -158,8 +158,8 @@ const validate = ({ title, description, mark, category, price }) => {
   if (!description) {
     errors.description = "Please enter a description";
   }
-  if (!mark) {
-    errors.mark = "Please select a brand";
+  if (!brand) {
+    errors.brand = "Please select a brand";
   }
   if (!category) {
     errors.category = "Please select a category";
