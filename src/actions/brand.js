@@ -3,7 +3,7 @@ import { apiAction } from "./api";
 
 export const getBrands = (filters = []) => {
   return apiAction({
-    url: "products/marks/list",
+    url: "brands",
     method: "GET",
     jwt: true,
     data: { filters },

@@ -20,8 +20,7 @@ import {
   ERROR_SET_PRODUCT,
   CLEAR_MODAL,
   CLEAR_DRAWER,
-  UPDATE_FILTERS,
-  NOTIFICATION
+  UPDATE_FILTERS
 } from "./types";
 import { apiAction } from "./api";
 import { notification } from "./notification";
@@ -44,7 +43,7 @@ export const getProducts = ({ pagination, filters, sorter = null }) => (
 
   dispatch(
     apiAction({
-      url: "products/list",
+      url: "products",
       method: "GET",
       jwt: true,
       data,
@@ -62,7 +61,7 @@ export const getProducts = ({ pagination, filters, sorter = null }) => (
 
 export const addProduct = data =>
   apiAction({
-    url: "products/add",
+    url: "products",
     method: "POST",
     jwt: true,
     data,
@@ -81,7 +80,7 @@ export const addProduct = data =>
 
 export const updateProduct = data =>
   apiAction({
-    url: `products/update/${data.id}`,
+    url: `products/${data.id}`,
     method: "PUT",
     jwt: true,
     data,
@@ -100,7 +99,7 @@ export const updateProduct = data =>
 
 export const deleteProduct = data =>
   apiAction({
-    url: `products/delete/${data.id}`,
+    url: `products/${data.id}`,
     method: "DELETE",
     jwt: true,
     onSuccess: data => (dispatch, getState) => {
@@ -118,7 +117,7 @@ export const deleteProduct = data =>
 
 export const initUpdateForm = data =>
   apiAction({
-    url: `products/get/${data.id}`,
+    url: `products/${data.id}`,
     method: "GET",
     jwt: true,
     onSuccess: data => ({ type: SET_INITIAL_UPDATE, payload: data }),
@@ -131,7 +130,7 @@ export const initUpdateForm = data =>
 
 export const getProduct = data =>
   apiAction({
-    url: `products/get/${data.id}`,
+    url: `products/${data.id}`,
     method: "GET",
     jwt: true,
     onSuccess: data => ({ type: SET_PRODUCT, payload: data }),
