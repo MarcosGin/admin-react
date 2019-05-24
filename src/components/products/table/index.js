@@ -56,7 +56,8 @@ class TableProduct extends Component {
 
     if (sorter.field) {
       const key = sorter.field.split(".");
-      params.sorter = `${key[0]}_${sorter.order}`;
+
+      params.sorter = `${key[0]}_${sorter.order === "ascend" ? "asc" : "desc"}`;
     }
 
     this.props.getProducts(params);
@@ -114,7 +115,7 @@ class TableProduct extends Component {
       {
         title: "Brand",
         width: "12%",
-        dataIndex: "mark.name",
+        dataIndex: "brand.name",
         filtered: true,
         filters: filtersBrand
       },
@@ -145,7 +146,7 @@ class TableProduct extends Component {
       {
         title: "Created",
         width: "12%",
-        dataIndex: "createdAt.date",
+        dataIndex: "createdAt",
         sorter: true,
         render: text => <span>{moment(text).format("D/MM/YY h:mm")}</span>
       },
