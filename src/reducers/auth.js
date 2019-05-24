@@ -14,7 +14,7 @@ const userJwt = localStorage.getItem("jwt");
 const getUserData = jwt => {
   let userData = null;
   try {
-    userData = jwt_decode(jwt).data;
+    userData = jwt_decode(jwt);
   } catch (e) {
     console.log(jwt);
     console.log(e);
