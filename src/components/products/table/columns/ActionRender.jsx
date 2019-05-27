@@ -32,6 +32,7 @@ const ActionRender = props => {
     return (
       <Popconfirm
         onConfirm={handleClick("delete")}
+        onCancel={e => e.stopPropagation()}
         title={textDelete}
         okType="danger"
         okText="Delete"
