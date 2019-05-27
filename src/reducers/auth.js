@@ -5,29 +5,31 @@ import {
   LOGIN,
   ERROR_LOGIN,
   LOGOUT,
-  UPDATE_JWT
+  UPDATE_JWT,
+  CLEAR_REDIRECT
 } from "../actions/types";
 import jwt_decode from "jwt-decode";
 
 const userJwt = localStorage.getItem("jwt");
 
 const getUserData = jwt => {
-  let userData = null;
   try {
-    userData = jwt_decode(jwt);
+    const userData = jwt_decode(jwt);
+    return userData;
   } catch (e) {
-    console.log(jwt);
-    console.log(e);
+    return null;
   }
-  return userData;
 };
 
+const user = getUserData(userJwt);
+
 const INITIAL_STATE = {
-  isSignedIn: userJwt ? true : null,
-  user: getUserData(userJwt),
-  jwt: userJwt ? userJwt : null,
+  isSignedIn: user ? true : null,
+  user,
+  jwt: user  ? userJwt : null,
   isLoading: null,
-  error: null
+  error: null,
+  redirectTo: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -61,6 +63,11 @@ export default (state = INITIAL_STATE, action) => {
         user: getUserData(action.payload),
         jwt: action.payload
       };
+    case CLEAR_REDIRECT: 
+      return {
+        ...state,
+        redirectTo: null
+      }
     case API_START:
       if (action.payload === SIGN_IN) {
         return {
