@@ -5,6 +5,7 @@ export const ERROR_LOGIN = "ERROR_LOGIN";
 export const REGISTER = "REGISTER";
 export const LOGOUT = "LOGOUT";
 export const UPDATE_JWT = "UPDATE_JWT";
+export const CLEAR_REDIRECT = "CLEAR_REDIRECT";
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const ALL_PRODUCTS = "ALL_PRODUCTS";

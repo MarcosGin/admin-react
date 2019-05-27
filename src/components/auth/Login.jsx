@@ -6,7 +6,7 @@ import { Typography } from "antd";
 import LoginForm from "../forms/LoginForm";
 
 import { history } from "../../store";
-import { signIn } from "../../actions";
+import { signIn, clearRedirect } from "../../actions";
 
 const { Title } = Typography;
 
@@ -18,6 +18,7 @@ class Login extends Component {
   }
 
   onSubmit = ({ email, password }) => {
+    this.props.clearRedirect();
     this.props.signIn(email, password);
   };
 
@@ -45,5 +46,5 @@ const mapStateToProps = ({ auth }) => {
 
 export default connect(
   mapStateToProps,
-  { signIn }
+  { signIn,clearRedirect }
 )(Login);

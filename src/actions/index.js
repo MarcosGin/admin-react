@@ -1,4 +1,4 @@
-export { signIn, signOut, updateJwt } from "./auth";
+export { signIn, signOut, updateJwt, clearRedirect } from "./auth";
 export {
   getProducts,
   addProduct,
