@@ -1,15 +1,11 @@
-import { ERROR_LOGIN, NOTIFICATION } from "../actions/types";
-
-import { error } from "react-toastify-redux";
+import { NOTIFICATION } from "../actions/types";
 import { notification } from "antd";
 
 const errorMiddleware = ({ dispatch }) => next => action => {
   switch (action.type) {
-    case ERROR_LOGIN:
-      dispatch(error(action.payload.response));
-      break;
     case NOTIFICATION:
       notification[action.payload.type]({
+        key: action.payload.key ? action.payload.key : null,
         message: action.payload.title,
         description: action.payload.content,
         style: {

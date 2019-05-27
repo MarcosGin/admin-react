@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API } from "../actions/types";
 import { apiStart, apiError, apiEnd } from "../actions/api";
-import { updateJwt } from "../actions";
+import { updateJwt, notification } from "../actions";
 import { signOut } from "../actions";
 
 const apiMiddleware = ({ dispatch, getState }) => next => action => {
@@ -30,7 +30,14 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
   let userJwt = null;
   if (jwt) {
     userJwt = getState().auth.jwt;
-    headers["Authorization"] = `Bearer ${userJwt}`;
+
+    if(userJwt){
+      headers["Authorization"] = `Bearer ${userJwt}`;
+    }else{
+      dispatch(signOut());
+      dispatch(notification("error", "Session error", "Your session is invalid, relogin.", "session-destroy"));
+      return;
+    }
   }
 
   if (label) {
@@ -55,10 +62,12 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
       dispatch(apiError(error));
 
       if (error.response) {
-        dispatch(onFailure(error.response.data));
 
         if (error.response.status === 401) {
           dispatch(signOut());
+          dispatch(notification("error", "Session error", error.response.data.response, "session-destroy"));
+        }else{
+          dispatch(onFailure(error.response.data));
         }
       }
     })
